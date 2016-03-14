@@ -1,0 +1,271 @@
+package partwhere.admin.gui;
+
+import javax.swing.JPanel;
+import java.awt.GridBagLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.GridBagConstraints;
+import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import partwhere.admin.sql.DataManager;
+import partwhere.admin.sql.PartType;
+
+import java.awt.Insets;
+import javax.swing.JFileChooser;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.File;
+import java.awt.event.ActionEvent;
+
+public class PartTypeEditorPanel extends JPanel{
+	private JTextField textName;
+	private JTextField textImgPath;
+	private JLabel lblBaseImagePathValue = new JLabel("\\");
+	private JButton btnApply = null;
+	private JButton btnCancel = null;
+	private PartType partType = null;
+	
+	private PWAMainWindow parent = null;
+
+	/**
+	 * Create the panel.
+	 */
+	public PartTypeEditorPanel(PWAMainWindow owner) {
+		parent = owner;
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		setLayout(gridBagLayout);
+		
+		JLabel lblName = new JLabel("Name:");
+		GridBagConstraints gbc_lblName = new GridBagConstraints();
+		gbc_lblName.insets = new Insets(0, 0, 5, 5);
+		gbc_lblName.anchor = GridBagConstraints.EAST;
+		gbc_lblName.gridx = 1;
+		gbc_lblName.gridy = 1;
+		add(lblName, gbc_lblName);
+		
+		textName = new JTextField();
+		GridBagConstraints gbc_textName = new GridBagConstraints();
+		gbc_textName.insets = new Insets(0, 0, 5, 5);
+		gbc_textName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textName.gridx = 2;
+		gbc_textName.gridy = 1;
+		add(textName, gbc_textName);
+		textName.setColumns(10);
+		textName.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				setApplyEnabled();
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+		});
+		
+		JLabel lblBaseImagePath = new JLabel("Base Image Path:");
+		GridBagConstraints gbc_lblBaseImagePath = new GridBagConstraints();
+		gbc_lblBaseImagePath.insets = new Insets(0, 0, 5, 5);
+		gbc_lblBaseImagePath.gridx = 1;
+		gbc_lblBaseImagePath.gridy = 2;
+		add(lblBaseImagePath, gbc_lblBaseImagePath);
+		GridBagConstraints gbc_lblBaseImagePathValue = new GridBagConstraints();
+		gbc_lblBaseImagePathValue.anchor = GridBagConstraints.WEST;
+		gbc_lblBaseImagePathValue.insets = new Insets(0, 0, 5, 5);
+		gbc_lblBaseImagePathValue.gridx = 2;
+		gbc_lblBaseImagePathValue.gridy = 2;
+		add(lblBaseImagePathValue, gbc_lblBaseImagePathValue);
+		setLblBaseImagePathValue(DataManager.getInstance().getBaseImagePath());
+		
+		JLabel lblImagePath = new JLabel("Relative Image Path:");
+		GridBagConstraints gbc_lblImagePath = new GridBagConstraints();
+		gbc_lblImagePath.anchor = GridBagConstraints.EAST;
+		gbc_lblImagePath.insets = new Insets(0, 0, 5, 5);
+		gbc_lblImagePath.gridx = 1;
+		gbc_lblImagePath.gridy = 3;
+		add(lblImagePath, gbc_lblImagePath);
+		
+		textImgPath = new JTextField();
+		GridBagConstraints gbc_textImgPath = new GridBagConstraints();
+		gbc_textImgPath.insets = new Insets(0, 0, 5, 5);
+		gbc_textImgPath.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textImgPath.gridx = 2;
+		gbc_textImgPath.gridy = 3;
+		add(textImgPath, gbc_textImgPath);
+		textImgPath.setColumns(10);
+		textImgPath.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				setApplyEnabled();
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+		});
+		
+
+		
+		JButton btnBrowse = new JButton("...");
+		btnBrowse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				browseImagePath();
+			}
+		});
+		GridBagConstraints gbc_btnBrowse = new GridBagConstraints();
+		gbc_btnBrowse.anchor = GridBagConstraints.WEST;
+		gbc_btnBrowse.insets = new Insets(0, 0, 5, 5);
+		gbc_btnBrowse.gridx = 3;
+		gbc_btnBrowse.gridy = 3;
+		add(btnBrowse, gbc_btnBrowse);
+		
+		btnApply = new JButton("Apply");
+		btnApply.setEnabled(false);
+		btnApply.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// save changes
+				saveEdits();
+			}
+		});
+		GridBagConstraints gbc_btnApply = new GridBagConstraints();
+		gbc_btnApply.anchor = GridBagConstraints.EAST;
+		gbc_btnApply.insets = new Insets(0, 0, 0, 5);
+		gbc_btnApply.gridx = 2;
+		gbc_btnApply.gridy = 14;
+		add(btnApply, gbc_btnApply);
+		
+		btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// abandon updates
+				cancelEdits();
+			}
+		});
+		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
+		gbc_btnCancel.insets = new Insets(0, 0, 0, 5);
+		gbc_btnCancel.gridx = 3;
+		gbc_btnCancel.gridy = 14;
+		add(btnCancel, gbc_btnCancel);
+
+	}
+
+	public String getTextName() {
+		return textName.getText();
+	}
+
+	public void setTextName(String textName) {
+		this.textName.setText(textName);
+	}
+
+	public String getTextImgPath() {
+		return textImgPath.getText();
+	}
+
+	public void setTextImgPath(String textImgPath) {
+		this.textImgPath.setText(textImgPath);
+	}
+
+	public void setLblBaseImagePathValue(String baseImagePathValue) {
+		this.lblBaseImagePathValue.setText(baseImagePathValue);
+	}
+
+	public PartType getPartType() {
+		return partType;
+	}
+
+	public void setPartType(PartType partType) {
+		this.partType = partType;
+		setTextName(partType.getName());
+	}
+
+	public void setApplyEnabled()
+	{
+		btnApply.setEnabled(!textName.getText().isEmpty() &&
+				(nameChanged() || imgPathChanged()));
+	}
+	
+	private boolean nameChanged()
+	{
+		String curName = partType.getName();
+		String newName = textName.getText();
+		return (curName != null && newName.compareTo(curName) != 0) ||
+			(curName == null && !newName.isEmpty());	
+	}
+
+	private boolean imgPathChanged()
+	{
+		String curPath = partType.getImagePath();
+		String newPath = textImgPath.getText();
+		return (curPath != null && newPath.compareTo(curPath) != 0) ||
+			(curPath == null && !newPath.isEmpty());			
+	}
+
+	private void browseImagePath()
+	{
+		JFileChooser findImage = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(
+		        "Image Files", "jpg", "gif", "png");
+		findImage.setFileFilter(filter);
+		File basePath = new File(DataManager.getInstance().getBaseImagePath());
+		if(basePath != null && basePath.exists())
+		{
+			findImage.setCurrentDirectory(basePath);
+		}
+	    int returnVal = findImage.showOpenDialog(this);
+	    if(returnVal == JFileChooser.APPROVE_OPTION) {
+	    	File selFile = findImage.getSelectedFile();
+	    	if(selFile != null)
+	    	{
+		    	String imgPath = selFile.getPath() + selFile.getName();
+		    	textImgPath.setText(imgPath);
+		    	setApplyEnabled();
+	    	}
+	    }
+	}
+	private void cancelEdits()
+	{
+		// confirm?
+		if(JOptionPane.showConfirmDialog(this, "Cancel edits?", 
+				"Confirm Cancel", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+		{
+			// reset values and disable apply
+			textName.setText(partType.getName());
+			textImgPath.setText(partType.getImagePath());
+			setApplyEnabled();
+		}
+	}
+	
+	private void saveEdits()
+	{
+		boolean updatedName = nameChanged();
+		if(updatedName)
+		{
+			partType.setName(textName.getText());
+		}
+		if(imgPathChanged())
+		{
+			partType.setImagePath(textImgPath.getText());
+		}
+		if(parent.updatePartType(partType, updatedName))
+		{
+			setApplyEnabled();
+		}
+	}
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="false" key="generateActivator"/>
+	<item value="3.5 or greater" key="targetName"/>
+	<item value="false" key="uiPlugin"/>
+	<item value="false" key="apiAnalysis"/>
+	<item value="true" key="rcpPlugin"/>
+	<item value="false" key="osgiProject"/>
+	<section name="PDEFormActionManager">
+	</section>
+	<section name="org.eclipse.pde.ui.PLUGIN_STATUS_DIALOG">
+		<item value="416" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="390" key="DIALOG_HEIGHT"/>
+		<item value="312" key="DIALOG_X_ORIGIN"/>
+		<item value="60" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="PluginExportWizard">
+		<item value="C:\java_partwhere_take_2\exported" key="destination0"/>
+		<item value="C:\java_partwhere_take_2\exported" key="destination1"/>
+		<item value="" key="keypass"/>
+		<item value="C:\java_partwhere_take_2\third.party.utils\build_scripts\exportPlugin.xml" key="antFileName0"/>
+		<item value="C:\java_partwhere_take_2\third.party.utils\build_scripts\exportPlugin.xml" key="antFileName1"/>
+		<item value="Generate source bundles" key="exportSourceFormat"/>
+		<item value="false" key="signJAR"/>
+		<item value="true" key="exportUpdate"/>
+		<item value="true" key="saveAsAnt"/>
+		<item value="false" key="exportSource"/>
+		<item value="true" key="allowBinaryCycles"/>
+		<item value="" key="password"/>
+		<item value="201602231756" key="qualifierName"/>
+		<item value="false" key="useWorkspaceCompiledClasses"/>
+		<item value="1" key="exportType"/>
+		<item value="false" key="qualifier"/>
+		<item value="" key="alias"/>
+		<item value="" key="keystore"/>
+		<item value="C:/java_partwhere_take_2/.metadata/.plugins/org.eclipse.pde.core/install/" key="installDestination0"/>
+		<item value="C:/java_partwhere_take_2/.metadata/.plugins/org.eclipse.pde.core/install/" key="installDestination1"/>
+	</section>
+	<section name="ProductExportWizard">
+		<item value="C:\java_partwhere_take_2" key="destination0"/>
+		<item value="true" key="syncProduct"/>
+		<item value="C:\java_partwhere_take_2" key="destination1"/>
+		<item value="true" key="allowBinaryCycles"/>
+		<item value="Generate source bundles" key="exportSourceFormat"/>
+		<item value="/partwhere.admin/partwhere.admin.product" key="productConfig1"/>
+		<item value="eclipse" key="productRoot"/>
+		<item value="/partwhere.admin/partwhere.admin.product" key="productConfig0"/>
+		<item value="false" key="exportSource"/>
+		<item value="true" key="exportDirectory"/>
+		<item value="true" key="p2metadata"/>
+	</section>
+	<section name="quick_assist_proposal_size">
+	</section>
+	<section name="targetStateView">
+	</section>
+</section>
