@@ -3,92 +3,6 @@ $servername = "localhost";
 $username = "partwhere";
 $password = "p@rtWh3r3";
 
-    function getPartTypes($parent = -1)
-    {
-    	$result = array();
-			try 
-			{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
-			    // set the PDO error mode to exception
-			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    	$query = 'SELECT * FROM PartType WHERE ParentPartTypeId';
-		    	if($parent == -1)
-		    	{
-		    		$query .= ' IS NULL';
-		    	}
-		    	else
-		    	{
-		    		$query .= '=' . $parent;
-		    	}
-		    	//echo $query;
-		    	$resultset = $conn->query($query);
-					if($resultset->rowcount() > 0)
-					{
-						$resultset->setFetchMode(PDO::FETCH_ASSOC);
-						$result = $resultset->fetchAll();				
-					}
-			}
-			catch(PDOException $e)
-			{
-			    echo "Get Part Types failed: " . $e->getMessage();
-			}
-			$conn = null;
-    	return $result;
-    }
-
-    function getParts($partType)
-    {
-    	$result = array();
-			try 
-			{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
-			    // set the PDO error mode to exception
-			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    	$query = 'SELECT p.* FROM Part p WHERE PartId in (SELECT PartId from PartToPartType WHERE PartTypeId=' . $partType . ')';
-		    	//echo $query;
-		    	$resultset = $conn->query($query);
-					if($resultset->rowcount() > 0)
-					{
-						$resultset->setFetchMode(PDO::FETCH_ASSOC);
-						$result = $resultset->fetchAll();				
-					}
-			}
-			catch(PDOException $e)
-			{
-			    echo "Get Parts for Part Type " . $partType . "failed: " . $e->getMessage();
-			}
-			$conn = null;
-    	return $result;
-    }
-    
-    function getLeafPartTypes()
-    {
-    	$result = array();
-			try 
-			{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
-			    // set the PDO error mode to exception
-			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    	$query = 'SELECT * FROM PartType WHERE PartTypeId not in (SELECT distinct ParentPartTypeId FROM PartType WHERE ParentPartTypeId IS NOT NULL)';
-		    	//echo $query;
-		    	$resultset = $conn->query($query);
-					if($resultset->rowcount() > 0)
-					{
-						$resultset->setFetchMode(PDO::FETCH_ASSOC);
-						$result = $resultset->fetchAll();				
-					}
-			}
-			catch(PDOException $e)
-			{
-			    echo "Get Leaf Part Types failed: " . $e->getMessage();
-			}
-			$conn = null;
-    	return $result;
-    }
-    
     function getHeadTypes()
     {
     	$result = array();
@@ -110,6 +24,32 @@ $password = "p@rtWh3r3";
 			catch(PDOException $e)
 			{
 			    echo "Get Head Types failed: " . $e->getMessage();
+			}
+			$conn = null;
+    	return $result;
+    }
+
+    function getLengths()
+    {
+    	$result = array();
+			try 
+			{
+				  global $servername, $username, $password;
+			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
+			    // set the PDO error mode to exception
+			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		    	$query = 'SELECT * FROM LengthType';
+		    	//echo $query;
+		    	$resultset = $conn->query($query);
+					if($resultset->rowcount() > 0)
+					{
+						$resultset->setFetchMode(PDO::FETCH_ASSOC);
+						$result = $resultset->fetchAll();				
+					}
+			}
+			catch(PDOException $e)
+			{
+			    echo "Get Length Types failed: " . $e->getMessage();
 			}
 			$conn = null;
     	return $result;
@@ -219,59 +159,75 @@ $password = "p@rtWh3r3";
     	return $result;
     }
 
-    function getUnits()
-    {
-    	$result = array();
-			try 
-			{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
-			    // set the PDO error mode to exception
-			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    	$query = 'SELECT * FROM unit';
-		    	//echo $query;
-		    	$resultset = $conn->query($query);
-					if($resultset->rowcount() > 0)
-					{
-						$resultset->setFetchMode(PDO::FETCH_ASSOC);
-						$result = $resultset->fetchAll();				
-					}
-			}
-			catch(PDOException $e)
-			{
-			    echo "Get Units failed: " . $e->getMessage();
-			}
-			$conn = null;
-    	return $result;
-    }
-    
-    function addPart($name, $desc, $imgFile, $partType)
+    function buildBolts($name, $head, $partType, $imgFile)
     {
     	$result = -1;
-			try 
-			{
+    	$lengths = getLengths();
+    	$iso = getISOThreadTypes();
+    	$uts = getUTSThreadTypes();
+    	if(count($lengths) > 0)
+    	{
+				try 
+				{
 				  global $servername, $username, $password;
 			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
 			    // set the PDO error mode to exception
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    	$query = "INSERT INTO Part (Name, Description, ImageFile) VALUES ('" . $name . "', '" . $desc . "', '" . $imgFile . "')";
-		    	$conn->exec($query);
-		    	$getId = "SELECT PartId FROM Part WHERE Name='" . $name . "'";
-		    	$resultset = $conn->query($getId);
-		    	// query should only return 1 record
-					if($resultset->rowcount() > 0)
+					foreach($lengths as $row)
 					{
-						$resultset->setFetchMode(PDO::FETCH_ASSOC);
-						$idRow = $resultset->fetch();				
-						$result = $idRow['PartId'];
-						setPartType($result, $partType);
+						$length = $row['Length'];
+						$lenid = $row['LengthTypeId'];
+						$full = true;
+						foreach($iso as $isothread)
+						{
+							$threadName = $isothread['Name'];
+							$threadId = $isothread['ISOId'];
+							$partName = $length . " " . $threadName . " " . $name;
+				    	$query = "INSERT INTO Part (Name, Length, ImageFile) VALUES ('" . $partName . "', " . $lenid . ",'" . $imgFile . "')";
+				    	$conn->exec($query);
+				    	$getId = "SELECT PartId FROM Part WHERE Name='" . $partName . "' and Length=" . $lenid;
+				    	$resultset = $conn->query($getId);
+				    	// query should only return 1 record
+							if($resultset->rowcount() > 0)
+							{
+								$resultset->setFetchMode(PDO::FETCH_ASSOC);
+								$idRow = $resultset->fetch();				
+								$result = $idRow['PartId'];
+								setPartType($result, $partType);
+								setHeadEnd($result, $head);
+								setISOThread($result, $threadId, $full);
+							}
+							$full = !$full;
+						}
+						foreach($uts as $utsthread)
+						{
+							$threadName = $utsthread['Name'];
+							$threadId = $utsthread['UTSId'];
+							$partName = $length . " " . $threadName . " " . $name;
+				    	$query = "INSERT INTO Part (Name, Length, ImageFile) VALUES ('" . $partName . "', " . $lenid . ",'" . $imgFile . "')";
+				    	$conn->exec($query);
+				    	$getId = "SELECT PartId FROM Part WHERE Name='" . $partName . "' and Length=" . $lenid;
+				    	$resultset = $conn->query($getId);
+				    	// query should only return 1 record
+							if($resultset->rowcount() > 0)
+							{
+								$resultset->setFetchMode(PDO::FETCH_ASSOC);
+								$idRow = $resultset->fetch();				
+								$result = $idRow['PartId'];
+								setPartType($result, $partType);
+								setHeadEnd($result, $head);
+								setUTSThread($result, $threadId, $full);
+							}
+							$full = !$full;
+						}
 					}
+				}
+				catch(PDOException $e)
+				{
+				    echo "buildBolts failed: " . $e->getMessage();
+				}
+				$conn = null;
 			}
-			catch(PDOException $e)
-			{
-			    echo "Add Part failed: " . $e->getMessage();
-			}
-			$conn = null;
     	return $result;
     }
 
@@ -288,38 +244,79 @@ $password = "p@rtWh3r3";
 			}
 			catch(PDOException $e)
 			{
-			    echo "Add Part failed: " . $e->getMessage();
+			    echo "Set part type failed: " . $e->getMessage();
 			}
 			$conn = null;
     }
 
-		function addScrew($partId, $diameter, $partLen, $head, 
-		$tip, $drive, $iso, $uts, $diamUnit, $lenUnit)
+		function setHeadEnd($partId, $headId)
 		{
-    	$result = -1;
 			try 
 			{
 				  global $servername, $username, $password;
 			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
 			    // set the PDO error mode to exception
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    	$query = "INSERT INTO Screw (PartId, Diameter, DiameterUnits, Length, LengthUnits, TipType, HeadType, DriveType, ISOStandard, UTSStandard) VALUES ('" . $partId . "', '" . $diameter . "', '" . $diamUnit . "', '" . $partLen  . "', '" . $lenUnits . "', '" . $tip  . "', '" . $head . "', '" . $drive . "', '" . $iso . "', '" . $uts . "')";
+		    	$query = "INSERT INTO PartHeadEnd (PartId, HeadTypeId) VALUES (" . $partId . ", " . $headId . ")";
 		    	$conn->exec($query);
-		    	$getId = "SELECT ScrewId FROM Screw WHERE PartId=" . $partId;
-		    	$resultset = $conn->query($getId);
-		    	// query should only return 1 record
-					if($resultset->rowcount() > 0)
-					{
-						$resultset->setFetchMode(PDO::FETCH_ASSOC);
-						$idRow = $resultset->fetch();				
-						$result = $idRow['ScrewId'];
-					}
 			}
 			catch(PDOException $e)
 			{
-			    echo "Add Screw failed: " . $e->getMessage();
+			    echo "Set part head failed: " . $e->getMessage();
 			}
 			$conn = null;
-    	return $result;			
-		}
+    }
+    
+		function setISOThread($partId, $isoId, $full)
+		{
+			try 
+			{
+				  global $servername, $username, $password;
+			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
+			    // set the PDO error mode to exception
+			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		    	$query = "INSERT INTO PartToThread (PartId, ISOId, FullyThreaded) VALUES (" . $partId . ", " . $isoId . ", ";
+		    	if($full)
+		    	{
+		    	 $query .= "1)";
+		    	}
+		    	else
+		    	{
+		    	 $query .= "0)";
+		    	}
+		    	$conn->exec($query);
+			}
+			catch(PDOException $e)
+			{
+			    echo "Set part ISO Thread failed: " . $e->getMessage();
+			}
+			$conn = null;
+    }
+
+		function setUTSThread($partId, $utsId, $full)
+		{
+			try 
+			{
+				  global $servername, $username, $password;
+			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
+			    // set the PDO error mode to exception
+			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		    	$query = "INSERT INTO PartToThread (PartId, UTSId, FullyThreaded) VALUES (" . $partId . ", " . $utsId . ", ";
+		    	if($full)
+		    	{
+		    	 $query .= "1)";
+		    	}
+		    	else
+		    	{
+		    	 $query .= "0)";
+		    	}
+		    	$conn->exec($query);
+			}
+			catch(PDOException $e)
+			{
+			    echo "Set part UTS Thread failed: " . $e->getMessage();
+			}
+			$conn = null;
+    }
+
 ?>

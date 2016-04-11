@@ -1,6 +1,7 @@
 <?php
 	// Retrieve the custom part properties depending on type
 	require 'dbAccess.php';
+/*
 	// get the id parameter from URL
 	$type = $_REQUEST["type"];
 	$result = "";
@@ -32,97 +33,7 @@
 		}
 	}
 	echo $result;
-	
-	function getScrewProps()
-	{
-		$headTypes = buildHeadTypeSelect();
-		$tipTypes = buildTipTypeSelect();
-		$driveTypes = buildDriveTypeSelect();
-		$isoTypes = buildISOThreadSelect();
-		$utsTypes = buildUTSThreadSelect();
-		$diameterUnits = buildUnitsSelect('diameterUnits');
-		$lengthUnits = buildUnitsSelect('lengthUnits');
-		
-		$custom = '<div class="row">';
-		$custom .= '<div class="col 16 s12">';
-		$custom .= '<div class="col 16 s2">Diameter </div>';
-		$custom .= '<div class="col 16 s3">';
-		$custom .= '<input type="text" id="diameter"/>';
-		$custom .= '</div>';
-		if($diameterUnits != '')
-		{
-			$custom .= '<div class="col 16 s2">Diameter Units </div>';
-			$custom .= '<div class="col 16 s3">';
-			$custom .= $diameterUnits;
-			$custom .= '</div>';
-		}
-		$custom .= '</div>';
-		$custom .= '<div class="row">';
-		$custom .= '<div class="col 16 s12">';
-		$custom .= '<div class="col 16 s2">Length </div>';
-		$custom .= '<div class="col 16 s3">';
-		$custom .= '<input type="text" id="length"/>';
-		$custom .= '</div>';
-		if($lengthUnits != '')
-		{
-			$custom .= '<div class="col 16 s2">Length Units </div>';
-			$custom .= '<div class="col 16 s3">';
-			$custom .= $diameterUnits;
-			$custom .= '</div>';
-		}
-		$custom .= '</div>';
-		if($headTypes != '')
-		{
-			$custom .= '<div class="row">';
-			$custom .= '<div class="col 16 s12">';
-			$custom .= '<div class="col 16 s2">Head Type </div>';
-			$custom .= '<div class="col 16 s3">';
-			$custom .= $headTypes;
-			$custom .= '</div>';
-			$custom .= '</div>';
-		}
-		if($tipTypes != '')
-		{
-			$custom .= '<div class="row">';
-			$custom .= '<div class="col 16 s12">';
-			$custom .= '<div class="col 16 s2">Tip Type </div>';
-			$custom .= '<div class="col 16 s3">';
-			$custom .= $tipTypes;
-			$custom .= '</div>';
-			$custom .= '</div>';
-		}
-		if($driveTypes != '')
-		{
-			$custom .= '<div class="row">';
-			$custom .= '<div class="col 16 s12">';
-			$custom .= '<div class="col 16 s2">Drive Type </div>';
-			$custom .= '<div class="col 16 s3">';
-			$custom .= $driveTypes;
-			$custom .= '</div>';
-			$custom .= '</div>';
-		}
-		if($isoTypes != '')
-		{
-			$custom .= '<div class="row">';
-			$custom .= '<div class="col 16 s12">';
-			$custom .= '<div class="col 16 s2">ISO Standard </div>';
-			$custom .= '<div class="col 16 s3">';
-			$custom .= $isoTypes;
-			$custom .= '</div>';
-			$custom .= '</div>';
-		}
-		if($utsTypes != '')
-		{
-			$custom .= '<div class="row">';
-			$custom .= '<div class="col 16 s12">';
-			$custom .= '<div class="col 16 s2">UTS Standard </div>';
-			$custom .= '<div class="col 16 s3">';
-			$custom .= $utsTypes;
-			$custom .= '</div>';
-			$custom .= '</div>';
-		}
-		echo $custom;
-	}
+	*/
 
 	function getNutProps()
 	{
@@ -148,11 +59,12 @@
 		$types = getHeadTypes();
 		if(count($types) > 0)
 		{
-			$custom = '<select name="headType" class="black-text">';
+			$custom = '<select name="headType" id="headType" class="black-text">';
 			$custom .= '<option value=-1>Select a Head Type</option>';
 			foreach($types as $row)
 			{
-				$custom .= '<option value=' . $row['HeadTypeId'] . '>' . $row['Name'];
+				$custom .= '<option value=' . $row['HeadTypeId'] . '>';
+				$custom .= $row['Name'];
 				if($row['AlternateName'] != null)
 				{
 					$custom .= ' (' . $row['AlternateName'] . ')';
@@ -170,7 +82,7 @@
 		$types = getTipTypes();
 		if(count($types) > 0)
 		{
-			$custom = '<select name="tipType" class="black-text">';
+			$custom = '<select name="tipType" id="tipType" class="black-text">';
 			$custom .= '<option value=-1>Select a Tip Type</option>';
 			foreach($types as $row)
 			{
@@ -188,7 +100,7 @@
 		$types = getDriveTypes();
 		if(count($types) > 0)
 		{
-			$custom = '<select name="driveType" class="black-text">';
+			$custom = '<select name="driveType" id="driveType" class="black-text">';
 			$custom .= '<option value=-1>Select a Drive Type</option>';
 			foreach($types as $row)
 			{
@@ -214,7 +126,7 @@
 		$types = getISOThreadTypes();
 		if(count($types) > 0)
 		{
-			$custom = '<select name="isoThread" class="black-text">';
+			$custom = '<select name="isoThread" id="isoThread" class="black-text">';
 			$custom .= '<option value=-1>Select an ISO Standard</option>';
 			foreach($types as $row)
 			{
@@ -236,7 +148,7 @@
 		$types = getUTSThreadTypes();
 		if(count($types) > 0)
 		{
-			$custom = '<select name="utsThread" class="black-text">';
+			$custom = '<select name="utsThread" id="utsThread" class="black-text">';
 			$custom .= '<option value=-1>Select a UTS Standard</option>';
 			foreach($types as $row)
 			{
@@ -258,7 +170,7 @@
 		$types = getUnits();
 		if(count($types) > 0)
 		{
-			$custom = '<select name="' . $name . '" class="black-text">';
+			$custom = '<select name="' . $name . '"  id="' . $name . '"class="black-text">';
 			$custom .= '<option value=-1>Select a Unit</option>';
 			foreach($types as $row)
 			{
