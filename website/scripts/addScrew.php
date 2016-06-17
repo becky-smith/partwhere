@@ -21,7 +21,7 @@
  <div class="navbar-fixed">
     <nav id="nav_f" class="default_color" role="navigation">
         <div class="container">
-            <a href="partSearch.php" id="logo-container" class="brand-logo"><img class="center" src="../img/minipartwherelogo.png"></a>
+            <a href="partSearch.php" id="logo-container" class="brand-logo"><img class="center" src="img/minipartwherelogo.png"></a>
             <div class="nav-wrapper">
                 <ul class="right hide-on-med-and-down">
                     <li><a href="partSearch.php">Find Part</a></li>

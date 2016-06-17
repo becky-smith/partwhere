@@ -1,16 +1,16 @@
 <?php
 	// select part type - may need to drill down levels
 	require 'dbAccess.php';
+	require 'getImageCard.php';
 	function getPartTypeImageButtons($parent = -1)
 	{
 		$output = '';
 		$partTypes = getPartTypes($parent);
 		if(count($partTypes) > 0)
 		{
-			// up to 4 images in a row...
+			// up to 4 images in a row on large displays...
 			$columnCt = 0;
 			$output .= '<div class="row">';
-			$output .= '<div class="col s12">';
 			foreach($partTypes as $row)
 			{
 				if($columnCt >= 4)
@@ -19,15 +19,33 @@
 					$output .= '</div>';
 					$output .= '</div>';
 					$output .= '<div class="row">';
-					$output .= '<div class="col s12">';
 					$columnCt = 0;
 				}
-				$output .= '<div class="col s3 tooltipped" data-position="bottom" data-delay="50" data-tooltip="' . $row['Name'] . '">';
-				$output .= '<img src=../img/' . $row['ImageFile'] . ' alt="' . $row['Name'] . '" onclick=partTypeSelected(' . $row['PartTypeId'] .')>';
+				$output .= '<div class="col s12 m4 l3 tooltipped" data-position="bottom" data-delay="50" data-tooltip="' . $row['Name'] . '">';
+				$output .= '<img src=img/' . $row['ImageFile'] . ' alt="' . $row['Name'] . '" onclick=partTypeSelected(' . $row['PartTypeId'] .')>';
 				$output .= '</div>';
 				$columnCt++;
 			}
 			$output .= '</div>';
+		}
+		return $output;
+	}
+
+	function getPartTypeImageCards($parent = -1)
+	{
+		$output = '';
+		$partTypes = getPartTypes($parent);
+		if(count($partTypes) > 0)
+		{
+			// up to 4 images in a row on large displays...
+			$columnCt = 0;
+			$output .= '<div class="row">';
+			foreach($partTypes as $row)
+			{
+				$cmd = 'partTypeSelected(' . $row['PartTypeId'] .')';
+				$output .= getImageCard($row['ImageFile'], $row['Name'], "help text goes here", $row['PartTypeId'], $cmd);
+				$columnCt++;
+			}
 			$output .= '</div>';
 		}
 		return $output;

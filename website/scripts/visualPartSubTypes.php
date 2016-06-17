@@ -3,6 +3,6 @@
 	require 'getImageButtons.php';
 	// get the id parameter from URL
 	$parent = $_REQUEST["id"];
-	$result = getPartTypeImageButtons($parent);
+	$result = getPartTypeImageCards($parent);
 	echo $result;
 ?>

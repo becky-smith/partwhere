@@ -5,11 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
     <meta name="theme-color" content="#9966FF">
     <title>Find Part </title>
-    <!-- CSS  -->
-    <link href="../min/plugin-min.css" type="text/css" rel="stylesheet">
-    <link href="../min/custom-min.css" type="text/css" rel="stylesheet" >
+    <!-- CSS  -->    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.min.css" type="text/css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet">
+    <link href="min/custom-min.css" type="text/css" rel="stylesheet" >
+<!--		
+<link href="http://code.jquery.com/mobile/latest/jquery.mobile.css" rel="stylesheet" type="text/css" /> 
+		<script src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>-->
+		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 </head>
 <body id="top" class="scrollspy">
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript" src="js/modernizr.js"></script>
+<script src="min/custom-min.js"></script>
 <!-- Pre Loader -->
 <div id="loader-wrapper">
     <div id="loader"></div>
@@ -18,28 +27,8 @@
 </div>
 
 <!--Navigation-->
+<?php include("navbar.html") ?>
 
-<div class="navbar-fixed">
-  <nav id="nav_f" class="default_color" role="navigation">
-      <div class="container">
-          <a href="partSearch.php" id="logo-container" class="brand-logo"><img class="center" src="../img/minipartwherelogo.png"></a>
-          <div class="nav-wrapper">
-              <ul class="right hide-on-med-and-down">
-                  <li><a href="partSearch.php">Find Part</a></li>
-                  <li><a href="addPart.php">Add Part</a></li>
-                  <li><a href="about.html">About Us</a></li>
-              </ul>
-              <ul id="nav-mobile" class="side-nav">
-                  <li><a href="partSearch.php">Find Part</a></li>
-                  <li><a href="addPart.php">Add Part</a></li>
-                  <li><a href="about.html">About Us</a></li>
-              </ul>
-	            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-          </div>
-      	</div>
-      </div>
-  </nav>
-</div>
 <div class="row" style="margin-top:10px">
 	<div class="col 16 s12">
 		<?php
@@ -73,23 +62,10 @@
 </div>
 
 <!--Footer-->
-<footer class="page-footer default_color scrollspy">
-    <div class="footer-copyright default_color">
-        <div class="container">
-            &copy; <?php echo date("Y") ?> PartWhere, LLC. All rights reserved.
-        </div>
-    </div>
-</footer>
+<?php include("footer.html") ?>
 
 	</body>
 </html>
-
-
-    <!--  Scripts-->
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="../js/materialize.min.js"></script>
-<script src="../min/plugin-min.js"></script>
-<script src="../min/custom-min.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {

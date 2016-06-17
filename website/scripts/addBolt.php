@@ -21,17 +21,15 @@
  <div class="navbar-fixed">
     <nav id="nav_f" class="default_color" role="navigation">
         <div class="container">
-            <a href="partSearch.php" id="logo-container" class="brand-logo"><img class="center" src="../img/minipartwherelogo.png"></a>
+            <a href="partSearch.php" id="logo-container" class="brand-logo"><img class="center" src="img/miniPartwhereLogo.png"></a>
             <div class="nav-wrapper">
                 <ul class="right hide-on-med-and-down">
                     <li><a href="partSearch.php">Find Part</a></li>
-                    <li><a href="addPart.php">Add Part</a></li>
-                    <li><a href="about.html">About Us</a></li>
                 </ul>
                 <ul id="nav-mobile" class="side-nav">
-                    <li><a href="partSearch.php">Find Part</a></li>
-                    <li><a href="addPart.php">Add Part</a></li>
-                    <li><a href="about.html">About Us</a></li>
+                  <li><a href="partSearch.php">ComboBox</a></li>
+                  <li><a href="visualSearch.php">Part Type</a></li>
+                  <li><a href="filtersSearch.php">Filters</a></li>
                 </ul>
 		            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
             </div>

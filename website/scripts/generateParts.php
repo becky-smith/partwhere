@@ -1,18 +1,19 @@
 <?php
 $servername = "localhost";
-$username = "partwhere";
+$username = "leiowaco_part";
 $password = "p@rtWh3r3";
+$dbname = "leiowaco_partwhereDemo";
 
     function getHeadTypes()
     {
     	$result = array();
 			try 
 			{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
+				  global $servername, $username, $password, $dbname;
+			    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 			    // set the PDO error mode to exception
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    	$query = 'SELECT * FROM HeadType';
+		    	$query = 'SELECT * FROM headtype';
 		    	//echo $query;
 		    	$resultset = $conn->query($query);
 					if($resultset->rowcount() > 0)
@@ -34,11 +35,11 @@ $password = "p@rtWh3r3";
     	$result = array();
 			try 
 			{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
+				  global $servername, $username, $password, $dbname;
+			    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 			    // set the PDO error mode to exception
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    	$query = 'SELECT * FROM LengthType';
+		    	$query = 'SELECT * FROM lengthtype';
 		    	//echo $query;
 		    	$resultset = $conn->query($query);
 					if($resultset->rowcount() > 0)
@@ -60,11 +61,11 @@ $password = "p@rtWh3r3";
     	$result = array();
 			try 
 			{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
+				  global $servername, $username, $password, $dbname;
+			    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 			    // set the PDO error mode to exception
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    	$query = 'SELECT * FROM TipType';
+		    	$query = 'SELECT * FROM tiptype';
 		    	//echo $query;
 		    	$resultset = $conn->query($query);
 					if($resultset->rowcount() > 0)
@@ -86,11 +87,11 @@ $password = "p@rtWh3r3";
     	$result = array();
 			try 
 			{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
+				  global $servername, $username, $password, $dbname;
+			    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 			    // set the PDO error mode to exception
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    	$query = 'SELECT * FROM DriveType';
+		    	$query = 'SELECT * FROM drivetype';
 		    	//echo $query;
 		    	$resultset = $conn->query($query);
 					if($resultset->rowcount() > 0)
@@ -112,8 +113,8 @@ $password = "p@rtWh3r3";
     	$result = array();
 			try 
 			{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
+				  global $servername, $username, $password, $dbname;
+			    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 			    // set the PDO error mode to exception
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		    	$query = 'SELECT * FROM isothreadstd';
@@ -138,8 +139,8 @@ $password = "p@rtWh3r3";
     	$result = array();
 			try 
 			{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
+				  global $servername, $username, $password, $dbname;
+			    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 			    // set the PDO error mode to exception
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		    	$query = 'SELECT * FROM utsthreadstd';
@@ -169,8 +170,8 @@ $password = "p@rtWh3r3";
     	{
 				try 
 				{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
+				  global $servername, $username, $password, $dbname;
+			    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 			    // set the PDO error mode to exception
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 					foreach($lengths as $row)
@@ -183,9 +184,9 @@ $password = "p@rtWh3r3";
 							$threadName = $isothread['Name'];
 							$threadId = $isothread['ISOId'];
 							$partName = $length . " " . $threadName . " " . $name;
-				    	$query = "INSERT INTO Part (Name, Length, ImageFile) VALUES ('" . $partName . "', " . $lenid . ",'" . $imgFile . "')";
+				    	$query = "INSERT INTO part (Name, Length, ImageFile) VALUES ('" . $partName . "', " . $lenid . ",'" . $imgFile . "')";
 				    	$conn->exec($query);
-				    	$getId = "SELECT PartId FROM Part WHERE Name='" . $partName . "' and Length=" . $lenid;
+				    	$getId = "SELECT PartId FROM part WHERE Name='" . $partName . "' and Length=" . $lenid;
 				    	$resultset = $conn->query($getId);
 				    	// query should only return 1 record
 							if($resultset->rowcount() > 0)
@@ -204,9 +205,9 @@ $password = "p@rtWh3r3";
 							$threadName = $utsthread['Name'];
 							$threadId = $utsthread['UTSId'];
 							$partName = $length . " " . $threadName . " " . $name;
-				    	$query = "INSERT INTO Part (Name, Length, ImageFile) VALUES ('" . $partName . "', " . $lenid . ",'" . $imgFile . "')";
+				    	$query = "INSERT INTO part (Name, Length, ImageFile) VALUES ('" . $partName . "', " . $lenid . ",'" . $imgFile . "')";
 				    	$conn->exec($query);
-				    	$getId = "SELECT PartId FROM Part WHERE Name='" . $partName . "' and Length=" . $lenid;
+				    	$getId = "SELECT PartId FROM part WHERE Name='" . $partName . "' and Length=" . $lenid;
 				    	$resultset = $conn->query($getId);
 				    	// query should only return 1 record
 							if($resultset->rowcount() > 0)
@@ -235,11 +236,11 @@ $password = "p@rtWh3r3";
 		{
 			try 
 			{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
+				  global $servername, $username, $password, $dbname;
+			    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 			    // set the PDO error mode to exception
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    	$query = "INSERT INTO PartToPartType (PartId, PartTypeId) VALUES (" . $partId . ", " . $partTypeId . ")";
+		    	$query = "INSERT INTO parttoparttype (PartId, PartTypeId) VALUES (" . $partId . ", " . $partTypeId . ")";
 		    	$conn->exec($query);
 			}
 			catch(PDOException $e)
@@ -253,11 +254,11 @@ $password = "p@rtWh3r3";
 		{
 			try 
 			{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
+				  global $servername, $username, $password, $dbname;
+			    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 			    // set the PDO error mode to exception
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    	$query = "INSERT INTO PartHeadEnd (PartId, HeadTypeId) VALUES (" . $partId . ", " . $headId . ")";
+		    	$query = "INSERT INTO partheadend (PartId, HeadTypeId) VALUES (" . $partId . ", " . $headId . ")";
 		    	$conn->exec($query);
 			}
 			catch(PDOException $e)
@@ -271,11 +272,11 @@ $password = "p@rtWh3r3";
 		{
 			try 
 			{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
+				  global $servername, $username, $password, $dbname;
+			    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 			    // set the PDO error mode to exception
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    	$query = "INSERT INTO PartToThread (PartId, ISOId, FullyThreaded) VALUES (" . $partId . ", " . $isoId . ", ";
+		    	$query = "INSERT INTO parttothread (PartId, ISOId, FullyThreaded) VALUES (" . $partId . ", " . $isoId . ", ";
 		    	if($full)
 		    	{
 		    	 $query .= "1)";
@@ -297,11 +298,11 @@ $password = "p@rtWh3r3";
 		{
 			try 
 			{
-				  global $servername, $username, $password;
-			    $conn = new PDO("mysql:host=$servername;dbname=partwhere", $username, $password);
+				  global $servername, $username, $password, $dbname;
+			    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 			    // set the PDO error mode to exception
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    	$query = "INSERT INTO PartToThread (PartId, UTSId, FullyThreaded) VALUES (" . $partId . ", " . $utsId . ", ";
+		    	$query = "INSERT INTO parttothread (PartId, UTSId, FullyThreaded) VALUES (" . $partId . ", " . $utsId . ", ";
 		    	if($full)
 		    	{
 		    	 $query .= "1)";
