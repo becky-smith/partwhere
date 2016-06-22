@@ -1,9 +1,9 @@
 <?php
 $servername = "localhost";
-$username = "partwhere";
-$dbname = "partwhere";
-//$username = "leiowaco_part";
-//$dbname = "leiowaco_partwhereDemo";
+//$username = "partwhere";
+//$dbname = "partwhere";
+$username = "leiowaco_part";
+$dbname = "leiowaco_partwhereDemo";
 $password = "p@rtWh3r3";
 
     function getPartTypes($parent = -1)
@@ -418,4 +418,65 @@ $password = "p@rtWh3r3";
 			$conn = null;
     }
 
+    function getTypeForLength($len, $unit)
+    {
+    	$result = -1;
+			try 
+			{
+				  global $servername, $username, $password, $dbname;
+			    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+			    // set the PDO error mode to exception
+			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		    	$query = 'SELECT lt.LengthTypeId FROM lengthtype lt WHERE lt.Unit=' . $unit . ' AND lt.DecimalVal=' . $len;
+		    	//echo $query;
+		    	$resultset = $conn->query($query);
+					if($resultset->rowcount() > 0)
+					{
+						$resultset->setFetchMode(PDO::FETCH_ASSOC);
+						$result = $resultset->fetchAll();				
+					}
+			}
+			catch(PDOException $e)
+			{
+			    echo "Get Type for Length failed: " . $e->getMessage();
+			}
+			$conn = null;
+    	return $result;
+    }
+
+    function getTypeForDiameter($len, $unit)
+    {
+    	$result = -1;
+			try 
+			{
+				  global $servername, $username, $password, $dbname;
+			    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+			    // set the PDO error mode to exception
+			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		    	$query = 'SELECT ';
+		    	if($unit === 1)
+		    	{
+		    		// standard thread - ISO
+			    	$query .= 't.ISOId as Thread FROM isothreadstd t WHERE t.NominalDiameter=' . $len;
+		    	}
+		    	else
+		    	{
+		    		// metric thread - UTS
+			    	$query .= 't.UTSId as Thread FROM utsthreadstd t WHERE t.NominalDiameterMM=' . $len;
+		    	}
+		    	//echo $query;
+		    	$resultset = $conn->query($query);
+					if($resultset->rowcount() > 0)
+					{
+						$resultset->setFetchMode(PDO::FETCH_ASSOC);
+						$result = $resultset->fetchAll();				
+					}
+			}
+			catch(PDOException $e)
+			{
+			    echo "Get Type for Diameter failed: " . $e->getMessage();
+			}
+			$conn = null;
+    	return $result;
+    }
 ?>

@@ -11,11 +11,6 @@
 	$driveType = -1;
 	$gradeType = -1;
 
-	if (array_key_exists("len",$_REQUEST))
-	{
-		$headType = $_REQUEST["head"];
-	}
-
 	if (array_key_exists("head",$_REQUEST))
 	{
 		$headType = $_REQUEST["head"];
@@ -45,7 +40,7 @@
 		$gradeType = $_REQUEST["grade"];
 	}
 	
-//	echo  'partType ' .  $parent . 'head ' .  $headType . ' tip ' .  $tipType  . ' drive ' .  $driveType  . ' length ' .  $lengthType  . ' iso ' .  $isoType . ' uts ' .  $utsType  . ' grade ' .   $gradeType . '<br>';
+	echo  'partType ' .  $parent . 'head ' .  $headType . ' tip ' .  $tipType  . ' drive ' .  $driveType  . ' length ' .  $lengthType  . ' iso ' .  $isoType . ' uts ' .  $utsType  . ' grade ' .   $gradeType . '<br>';
 	// make sure at least one filter is specified...
 	$result = '<div class="row">';
 	$partsCount = 0;
@@ -68,7 +63,7 @@
 			$result .= '<div class="row">';
 			// this part type has parts
 			// create a table to display the parts
-			$result .= '<table class="highlight">';
+			$result .= '<table class="table-hover">';
 	    $result .= '<thead>';
 			$result .= '<tr>';
 			$result .= '<th data-field="img">Image</th>';

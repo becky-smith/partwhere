@@ -6,10 +6,16 @@
     <meta name="theme-color" content="#9966FF">
     <title>Add Bolt </title>
     <!-- CSS  -->
-    <link href="../min/plugin-min.css" type="text/css" rel="stylesheet">
-    <link href="../min/custom-min.css" type="text/css" rel="stylesheet" >
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.min.css" type="text/css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet">
+    <link href="css/custom-min.css" type="text/css" rel="stylesheet" >
+		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 </head>
 <body id="top" class="scrollspy">
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript" src="js/modernizr.js"></script>
+<script type="text/javascript" src="js/custom-min.js"></script>
 <!-- Pre Loader -->
 <div id="loader-wrapper">
     <div id="loader"></div>
@@ -154,9 +160,9 @@ $name = $desc = $imgFile = "";
 
     <!--  Scripts-->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="../js/materialize.min.js"></script>
-<script src="../min/plugin-min.js"></script>
-<script src="../min/custom-min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script src="js/plugin-min.js"></script>
+<script src="js/custom-min.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {

@@ -9,16 +9,13 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.min.css" type="text/css" rel="stylesheet">
     <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet">
-    <link href="min/custom-min.css" type="text/css" rel="stylesheet" >
-<!--		
-<link href="http://code.jquery.com/mobile/latest/jquery.mobile.css" rel="stylesheet" type="text/css" /> 
-		<script src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>-->
+    <link href="css/custom-min.css" type="text/css" rel="stylesheet" >
 		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 </head>
 <body id="top" class="scrollspy">
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script type="text/javascript" src="js/modernizr.js"></script>
-<script src="min/custom-min.js"></script>
+<script type="text/javascript" src="js/custom-min.js"></script>
 
 <!-- Pre Loader -->
 <div id="loader-wrapper">
