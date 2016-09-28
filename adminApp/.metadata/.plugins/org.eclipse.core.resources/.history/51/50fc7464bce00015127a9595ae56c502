@@ -1,5 +1,0 @@
-package partwhere.admin.gui;
-
-public interface EditorTab {
-
-}

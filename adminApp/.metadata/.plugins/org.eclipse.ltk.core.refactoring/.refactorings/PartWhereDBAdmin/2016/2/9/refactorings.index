@@ -1,5 +1,0 @@
-1456336398750	Rename local variable 'partTypeId'
-1456336536236	Change method 'getLoadedPartsForType'
-1456344646684	Rename type 'PartEditorPanel'
-1456345448538	Encapsulate field 'partType'
-1456345674894	Rename method 'setApplyEnable'
