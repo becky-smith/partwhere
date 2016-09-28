@@ -1,6 +1,6 @@
 <?php
 	// select part type - may need to drill down levels
-	require 'dbAccess.php';
+	require_once 'dbAccess.php';
 	// get the id parameter from URL
 	$parent = $_REQUEST["id"];
 	$partTypes = getPartTypes($parent);
@@ -36,7 +36,6 @@
       $result .= '<thead>';
 			$result .= '<tr>';
 			$result .= '<th data-field="name">Name</th>';
-			$result .= '<th data-field="desc">Description</th>';
 			$result .= '<th data-field="img">Image</th>';
 			$result .= '</tr>';
 			$result .= '</thead>';
@@ -45,12 +44,11 @@
 			{
 				$result .= '<tr>';
 				$result .= '<td>' . $row['Name'] . '</td>';
-				$result .= '<td>' . $row['Description'] . '</td>';
 				$imgFile = $row['ImageFile'];
 				if($imgFile != null && strlen($imgFile) > 0)
 				{
 					// display image?
-					$result .= '<td><img src =../img/' . $imgFile . '></td>';
+					$result .= '<td><img src =img/' . $imgFile . '></td>';
 				}
 				$result .= '</tr>';
 			}

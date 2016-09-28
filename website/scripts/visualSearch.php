@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
     <meta name="theme-color" content="#9966FF">
     <title>Find Part </title>
-    <!-- CSS  -->    
+    <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.min.css" type="text/css" rel="stylesheet">
     <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet">
@@ -24,35 +24,29 @@
 </div>
 
 <!--Navigation-->
+
 <?php include("navbar.html") ?>
 
 <div class="row" style="margin-top:10px">
-	<div class="col 16 s12">
-		<?php
-			// select part type - may need to drill down levels
-			require_once 'dbAccess.php';
-			$partTypes = getPartTypes();
-			if(count($partTypes) > 0)
-			{
-				echo '<div class="col 16 s2">Part Type</div>';
-				echo '<div class="col 16 s3">';
-				echo '<select name="PartType" class="black-text" onchange="partTypeChanged(this)">';
-				echo '<option value=-1>Select a Part Type</option>';
-				foreach($partTypes as $row)
-				{
-					echo '<option value=' . $row['PartTypeId'] . '>' . $row['Name'] . '</option>';
-				}
-				echo '</select>'; 
-			}
-			else
-			{
-				echo '<div class="col 16 s4">';
-				echo 'No Part Types found';
-				echo '</div>';
-			}
-		?>
-	</div>
+		<div class="col s12 m4 l3">Select Part Type:</div>
 </div>
+<?php
+	// select part type - may need to drill down levels
+	require_once 'getImageButtons.php';
+	$partTypes = getPartTypeImageCards();
+	if($partTypes != '')
+	{
+		echo $partTypes;
+	}
+	else
+	{
+		echo '<div class="row">';
+		echo '<div class="col s12 m4 l3">';
+		echo 'No Part Types found';
+		echo '</div>';
+		echo '</div>';
+	}
+?>
 <div class="row" id="subPartTypeSection">
 </div>
 <div class="row" id="partSection">
@@ -64,26 +58,42 @@
 	</body>
 </html>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-	  $('select').material_select();
-	});
 
-	function partTypeChanged(sel)
+    <!--  Scripts-->
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.tooltipped').tooltip({delay: 50});
+  });
+
+	var partType = -1;
+	var headType = -1;
+	var partLen = -1;
+	var partDiam = -1;
+	function partTypeSelected(sel)
 	{
-		var value = sel.value;
-		if(value != -1)
+		if(sel != -1)
 		{
+			partType = sel;
 	    var xmlhttp = new XMLHttpRequest();
 	    xmlhttp.onreadystatechange = function() {
 	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+	        	if(xmlhttp.responseText != "")
+	        	{
 	            document.getElementById("subPartTypeSection").innerHTML = xmlhttp.responseText;
-							$(document).ready(function() {
-							  $('select').material_select();
-							});
+						  $(document).ready(function(){
+						  	$('.tooltipped').tooltip("remove");
+						    $('.tooltipped').tooltip({delay: 50});
+						  });
+	            
+	          }
+	          else
+          	{
+          		// no subtypes...get parts?  Get other properties?
+          		getParts();
+          	}
 	        }
 	    };
-	    xmlhttp.open("POST", "getPartSubTypes.php?id=" + value, true);
+	    xmlhttp.open("POST", "visualPartSubTypes.php?id=" + sel, true);
 	    xmlhttp.send();
 	  }
 	  else
@@ -91,22 +101,24 @@
 	  		document.getElementById("subPartTypeSection").innerHTML = "";
 	  	}
 	}
-
-	function subPartTypeChanged(sel)
+	
+	function getParts()
 	{
-		var value = sel.value;
-		if(value != -1)
-		{
 	    var xmlhttp = new XMLHttpRequest();
 	    xmlhttp.onreadystatechange = function() {
-	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-	            document.getElementById("partSection").innerHTML = xmlhttp.responseText;
-						  $('select').material_select();
-	        }
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        	if(xmlhttp.responseText != "")
+        	{
+            document.getElementById("partSection").innerHTML = xmlhttp.responseText;
+					  $(document).ready(function(){
+					  	$('.tooltipped').tooltip("remove");
+					    $('.tooltipped').tooltip({delay: 50});
+					  });
+          }
+        }
 	    };
-	    xmlhttp.open("POST", "getPartSubTypes.php?id=" + value, true);
+	    xmlhttp.open("POST", "getParts.php?id=" + partType, true);
 	    xmlhttp.send();
-	  }
 	}
 		
 </script>
